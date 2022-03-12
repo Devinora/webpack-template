@@ -1,0 +1,30 @@
+// Исходники: https://css-tricks.com/snippets/sass/str-replace-function/
+// '$string: The answer to life the universe and everything is 42.;'
+// strReplace($string, 'e', 'ba');
+// "Thba answbar to lifba thba univbarsba and bavbarything is 42."
+@function strReplace($string, $search, $replace: '') {
+  $index: str-index($string, $search);
+
+  @if $index {
+    @return str-slice($string, 1, $index - 1) + $replace +
+      strReplace(
+        str-slice($string, $index + str-length($search)),
+        $search,
+        $replace
+      );
+  }
+
+  @return $string;
+}
+
+// Первая буква строки в верхнем регистр
+//"hello, Sad" - "Hello, Sad"
+@function strFirstToUpperCase($string) {
+  @return to-upper-case(str-slice($string, 1, 1)) + str-slice($string, 2);
+}
+
+// Первая буква строки в нижнем регистр
+// "HELLO, Sad" - "hELLO, Sad"
+@function strFirstToLowerCase($string) {
+  @return to-lower-case(str-slice($string, 1, 1)) + str-slice($string, 2);
+}

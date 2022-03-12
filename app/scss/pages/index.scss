@@ -1,0 +1,80 @@
+@charset 'utf-8';
+@use 'sass:map';
+@use "sass:meta";
+@use "sass:string";
+
+@use '../libs/reset';
+@use '../utilities/fonts';
+@use '../base/header';
+@use '../libs/lib';
+@use '../base/footer';
+
+
+// @include fonts.fontFace(
+//   (
+//     'name': 'Poppins',
+//        // Соблюдать такой же реги
+//     'list':
+//       (
+//         'Thin',
+//         'Thin-Italic',
+//         'Bold-Italic',
+//         'Black',
+//         'Black-Italic',
+//         'ExtraBold',
+//         'SemiBold-Italic'
+//       ),
+//   )
+// );
+
+@include fonts.fontFace(
+  (
+    'name': 'Poppins',
+       // Соблюдать такой же реги
+    'list':
+      (
+        'Thin',
+        'Thin-Italic',
+        'Bold-Italic',
+        'Black',
+        'Medium',
+        'Black-Italic',
+        'ExtraBold',
+        'SemiBold-Italic'
+      ),
+  )
+);
+
+.page {
+  background: url('../../img/one.jpg');
+  font-family: 'Poppins';
+  // background-image: url('../');
+  font-weight: 500;
+}
+
+.page__w {
+  // display: flex;
+  // flex-direction: column;
+  // flex-grow: 1;
+}
+// body {
+//   background: url('../../img/julia-craice-qbUYUbBubHo-unsplash.jpg');
+// }
+
+body {
+  background: #000;
+}
+
+.rita {
+  display: block;
+  // width: 50%;
+  // width: 100%;
+  max-width: 100%;
+  border: 2px solid rgb(13, 204, 147);
+  border-radius: 20px;
+  margin: 10px;
+  // flex: 1 0 auto;
+  width: 20%;
+  transition: transform;
+  transform: translate(100%, 100%);
+}

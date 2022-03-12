@@ -1,0 +1,165 @@
+@use '../modules/function';
+@use 'sass:map';
+@use 'sass:string';
+
+// Font Names
+$namePoppins: 'Poppins';
+
+// Font Path
+$path: '../../fonts/';
+
+// Font Style
+$styleItalic: italic;
+$styleNormal: normal;
+
+// Font Style Names
+$styleNameItalic: 'Italic';
+$styleNameNormal: 'Normal';
+
+// Font Weight
+$weightThin: 100;
+$weightExtraLight: 200;
+$weightLight: 300;
+$weightRegular: 400;
+$weightMedium: 500;
+$weightSemiBold: 600;
+$weightBold: 700;
+$weightExtraBold: 800;
+$weightBlack: 900;
+
+$weightList: (
+  'Thin': 100,
+  'ExtraLight': 200,
+  'Light': 300,
+  'Regular': 400,
+  'Medium': 500,
+  'SemiBold': 600,
+  'Bold': 700,
+  'ExtraBold': 800,
+  'Black': 900,
+);
+
+// Font Weight Names
+$weightNameThin: 'Thin';
+$weightNameExtraLight: 'ExtraLight';
+$weightNameLight: 'Light';
+$weightNameRegular: 'Regular';
+$weightNameMedium: 'Medium';
+$weightNameSemiBold: 'SemiBold';
+$weightNameBold: 'Bold';
+$weightNameExtraBold: 'ExtraBold';
+$weightNameBlack: 'Black';
+
+// Font Poppins
+// $fontPoppinsList: (
+//   'thin': 'Thin',
+//   'thinItalic': 'Thin-Italic',
+//   'extraLight': 'ExtraLight',
+//   'extraLightItalic': 'ExtraLight-Italic',
+//   'light': 'Light',
+//   'lightItalic': 'Light-Italic',
+//   'regular': 'Regular',
+//   'regularItalic': 'Regular-Italic',
+//   'medium': 'Medium',
+//   'mediumItalic': 'Medium-Italic',
+//   'semiBold': 'SemiBold',
+//   'semiBoldItalic': 'SemiBold-Italic',
+//   'bold': 'Bold',
+//   'boldItalic': 'Bold-Italic',
+//   'extraBold': 'ExtraBold',
+//   'extraBoldItalic': 'ExtraBold-Italic',
+//   'black': 'Black',
+//   'blackItalic': 'Black-Italic',
+// );
+
+// $FONT: (
+//   'thin': (
+//     'name': 'Thin'
+//   ),
+//   'thinItalic': 'Thin-Italic',
+//   'extraLight': 'ExtraLight',
+//   'extraLightItalic': 'ExtraLight-Italic',
+//   'light': 'Light',
+//   'lightItalic': 'Light-Italic',
+//   'regular': 'Regular',
+//   'regularItalic': 'Regular-Italic',
+//   'medium': 'Medium',
+//   'mediumItalic': 'Medium-Italic',
+//   'semiBold': 'SemiBold',
+//   'semiBoldItalic': 'SemiBold-Italic',
+//   'bold': 'Bold',
+//   'boldItalic': 'Bold-Italic',
+//   'extraBold': 'ExtraBold',
+//   'extraBoldItalic': 'ExtraBold-Italic',
+//   'black': 'Black',
+//   'blackItalic': 'Black-Italic',
+// );
+
+@mixin fontFace($font) {
+  $fontName: map.get($font, 'name');
+  // Test Test: Test-Test
+  $fontNameStandard: function.strReplace($fontName, ' ', '-');
+  $fontList: map.get($font, 'list');
+  @debug $fontNameStandard;
+
+  @each $item in $fontList {
+    // Имя начертания в нижнем регистре.
+    $nameToLowercase: string.to-lower-case($item);
+    $fontWeightStyleName: function.strReplace($item, '-', ' ');
+    // Индекс строки для условия.
+    $isItemIndex: string.index($nameToLowercase, $styleItalic);
+    // Путь
+    $srcFile: '#{$path}#{$fontNameStandard}/#{$fontNameStandard}-#{$item}/#{$fontNameStandard}-#{$item}';
+    // Индекс подстроки.
+    $substringIndex: string.index($item, '-');
+    // Создание переменное для дальнейшего переопределения.
+    // Числовое имя начертания.
+    $weight: null;
+
+    @if $substringIndex == null {
+      $weight: map.get($weightList, $item);
+    } @else {
+      $substringIndex: $substringIndex - 1;
+      $weightName: string.slice($item, 1, $substringIndex);
+      $weight: map.get($weightList, $weightName);
+    }
+
+    @font-face {
+      font-family: $fontName;
+      src: url('#{$srcFile}.eot');
+      src: local('#{$fontName} #{$fontWeightStyleName}'), local('#{$fontNameStandard}-#{$item}'),
+        url('#{$srcFile}.eot?#iefix') format('embedded-opentype'),
+        url('#{$srcFile}.woff') format('woff'),
+        url('#{$srcFile}.ttf') format('truetype'),
+        url('#{$srcFile}.svg##{$fontName}') format('svg');
+      @if $isItemIndex {
+        font-weight: $weight;
+        font-style: $styleItalic;
+      } @else {
+        font-weight: $weight;
+        font-style: $styleNormal;
+      }
+    }
+  }
+}
+
+// $icomoon: (
+//   example: 'e900',
+// );
+
+//методы sass
+//метод uquote удаляет (").
+//метод str-insert добавляет второй аргумент в первый за счет третего, который указывает позицию.
+
+// @each $name, $str in $icomoon {
+//   .icon-#{$name}:before {
+//     content: unquote('"') + unquote(str-insert ($str, '\\', 1)) + unquote('"');
+//   }
+// }
+
+// @each $name, $str in $icomoon {
+//   [class^='icon-#{$name}']:before,
+//   [class*='icon-#{$name}']:before {
+//     content: unquote('"') + unquote(str-insert($str, '\\', 1)) + unquote('"');
+//   }
+// }

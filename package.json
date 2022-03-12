@@ -1,0 +1,27 @@
+{
+  "name": "webpack-template",
+  "version": "1.0.0",
+  "description": "Front End Template",
+  "private": true,
+  "scripts": {
+    "dev": "webpack serve --node-env development --config ./configs/webpack.dev.js",
+    "prod": "webpack --node-env production --config ./configs/webpack.prod.js",
+    "watch": "webpack --watch --node-env watch --env watch --config ./configs/webpack.prod.js",
+    "analyze": "webpack --node-env production --config ./configs/webpack.prod.js --analyze"
+  },
+  "keywords": [
+    "webpack",
+    "js",
+    "nodejs"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Devinora/webpack-template.git"
+  },
+  "author": "Devinora <kh.devinora@gmail.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Devinora/webpack-template/issues"
+  },
+  "homepage": "https://github.com/Devinora/webpack-template#readme"
+}
